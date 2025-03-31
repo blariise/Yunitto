@@ -1,20 +1,30 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
+#include <chrono>
+#include <string>
+#include <string_view>
+
 class Transaction {
-publid:
-  enum Type {
-    buy,
-    sell,
-    max_types
-  };
-  assert(Type::max_types == 2);
-private:
-  static std::string m_transaction_id;
-  Asset asset;
-  Type m_transaction_type;
-  double m_quantity;
-  double m_price;
+  public:
+    using Date = std::chrono::year_month_day;
+    
+    Transaction() = delete;
+    Transaction(double quantity, double price, std::string_view payment_currency, Date date); 
+  
+    int getTransactionId() const;
+    double getQuantity() const;
+    double getPrice() const;
+    const std::string& getPaymentCurrency() const;
+    const Date getDate() const;
+  private:
+    double m_quantity;
+    double m_price;
+    std::string m_payment_currency;
+    Date m_date;
+    
+    static inline int s_id_generator { 1 };
+    int m_transaction_id;
 };
 
 #endif // TRANSACTION_H
