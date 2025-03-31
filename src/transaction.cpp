@@ -7,8 +7,7 @@ Transaction::Transaction(double quantity, double price, std::string_view payment
   , m_price { price }
   , m_payment_currency { payment_currency }
   , m_date { date }
-  , m_transaction_id { s_id_generator++ }
-  {}
+  , m_transaction_id { s_id_generator++ } {}
 
 int Transaction::getTransactionId() const { return m_transaction_id; }
 double Transaction::getQuantity() const { return m_quantity; }

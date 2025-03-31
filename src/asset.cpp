@@ -11,4 +11,8 @@ const std::string& Asset::getTicker() const { return m_ticker; }
 const std::string& Asset::getType() const { return m_type; }
 const std::string& Asset::getCurrency() const { return m_currency; }
 double Asset::getCurrentPrice() const { return m_current_price; }
+double Asset::getTotalQuantity() const { return m_total_quantity; }                                      
 
+void Asset::addTransaction(const Transaction& transaction) {
+  m_transactions.push_back(transaction);
+}

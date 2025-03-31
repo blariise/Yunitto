@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <string_view>
+#include <vector>
+
+#include "transaction.h"
 
 class Asset {
   public:
@@ -14,14 +17,17 @@ class Asset {
     const std::string& getType() const;
     const std::string& getCurrency() const;
     double getCurrentPrice() const;
+    double getTotalQuantity() const;
+    
+    void addTransaction(const Transaction& transaction);
   private:
     std::string m_name;
     std::string m_ticker;
     std::string m_type;
     std::string m_currency;
-    // transactions vector
     double m_current_price;
- 
+    std::vector<Transaction> m_transactions;
+    double m_total_quantity;
 };
 #endif // ASSET_H
 
