@@ -17,6 +17,7 @@ class Transaction {
     double getPrice() const;
     const std::string& getPaymentCurrency() const;
     const Date getDate() const;
+
   private:
     double m_quantity;
     double m_price;
