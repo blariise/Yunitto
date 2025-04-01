@@ -17,27 +17,22 @@ class Asset {
     const std::string& getType() const;
     const std::string& getCurrency() const;
     double getCurrentPrice() const;
-    double getTotalQuantity() const;
+
+    double getQuantity() const;
     double getTotalCost() const;
     double getCurrentValue() const;
     double getProfit() const;
 
     void addTransaction(const Transaction& transaction);
-    void calculateProfit();
-    void calculateCurrentValue();
 
   private:
     std::string m_name;
     std::string m_ticker;
     std::string m_type;
     std::string m_currency;
-    
-    double m_current_price { 30 }; // temp value
-    double m_total_quantity { 0 };
-    double m_total_cost { 0 };
-    double m_current_value { 0 };
-    double m_profit;
 
+    double m_current_price { 30 }; // temp value
+    
     std::vector<Transaction> m_transactions;
 };
 #endif // ASSET_H
