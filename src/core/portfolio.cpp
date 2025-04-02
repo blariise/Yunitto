@@ -5,15 +5,14 @@ Portfolio::Portfolio(std::string_view name)
 
 const std::string& Portfolio::getName() const { return m_name; }
 
-double Portfolio::getTotalValue() {
+double Portfolio::getTotalValue() const {
   double value { 0 };
-  for (const auto& asset : m_assets) {
+  for (const auto& asset : m_assets)
     value += asset->getCurrentValue();
-  }
   return value;
 }
 
-double Portfolio::getTotalProfit() {
+double Portfolio::getTotalProfit() const {
   double profit { 0 };
   for (const auto& asset : m_assets)
     profit += asset->getProfit();

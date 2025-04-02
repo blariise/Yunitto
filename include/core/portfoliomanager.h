@@ -14,6 +14,7 @@ class PortfolioManager {
     void addPortfolio(std::shared_ptr<Portfolio> portfolio);
     void removePortfolio(const std::shared_ptr<Portfolio>& portfolio);
 
+    double getTotalValue() const;
   private:
     std::vector<std::shared_ptr<Portfolio>> m_portfolios; 
 };

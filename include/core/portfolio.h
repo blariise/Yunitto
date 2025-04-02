@@ -14,8 +14,8 @@ class Portfolio {
     Portfolio(std::string_view name);
 
     const std::string& getName() const;
-    double getTotalValue();
-    double getTotalProfit();
+    double getTotalValue() const;
+    double getTotalProfit() const;
 
     void addAsset(std::shared_ptr<Asset> asset);
 

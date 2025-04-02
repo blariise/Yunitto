@@ -33,7 +33,16 @@ int main() {
 
   eth->addTransaction( {10, 30, "PLN", ymd} );
 
-  std::cout << crypto->getTotalValue() << '\n';
+  std::cout << "crypto porftolio value: " << crypto->getTotalValue() << '\n';
+  auto etf { std::make_shared<Portfolio>("etf") };
+  pm.addPortfolio(etf);
+  auto msci { std::make_shared<Asset>("MSWI", "xd", "etf", "PLN") };
+  etf->addAsset(msci);
+  msci->addTransaction({10, 130, "PLN", ymd});
+  
+  std::cout << "etf portfolio value: " << etf->getTotalValue() << '\n';
+
+  std::cout << "All porftolios value: " <<pm.getTotalValue() << '\n';
   return 0;
 }
 

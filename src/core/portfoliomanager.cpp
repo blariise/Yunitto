@@ -11,3 +11,10 @@ void PortfolioManager::removePortfolio(const std::shared_ptr<Portfolio>& portfol
   if (it != m_portfolios.end())
     m_portfolios.erase(it);
 }
+
+double PortfolioManager::getTotalValue() const {
+  double value { 0 };
+  for (const auto& portfolio : m_portfolios)
+    value += portfolio->getTotalValue();
+  return value;
+}
