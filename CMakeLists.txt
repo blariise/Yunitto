@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(porfolio-tracker LANGUAGES CXX)
+project(Yunitto LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -9,20 +9,28 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 # Collect all source files
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES 
+  "src/core/*.cpp"
+  "src/views/*.cpp"
+  "src/controllers/*.cpp"
+)
 
 # Collect all QML and other resource files (e.g., images) in the resources directory
 file(GLOB_RECURSE RESOURCE_FILES "resources/*")
 
 # Include directories for headers
-include_directories(include)
+include_directories(
+  include/core
+  include/views
+  include/controller
+)
 
 # Create the executable
-add_executable(porfolio-tracker ${SOURCES})
+add_executable(Yunitto ${SOURCES})
 
 # Link Qt Quick library
-target_link_libraries(porfolio-tracker PRIVATE Qt6::Quick)
+target_link_libraries(Yunitto PRIVATE Qt6::Quick)
 
 # Add generated resource files to the project
-target_sources(porfolio-tracker PRIVATE ${QML_RESOURCE})
+target_sources(Yunitto PRIVATE ${QML_RESOURCE})
 
