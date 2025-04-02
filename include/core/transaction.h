@@ -29,6 +29,4 @@ class Transaction {
     static inline int s_id_generator { 1 };
     int m_transaction_id;
 };
-
 #endif // TRANSACTION_H
-
