@@ -26,7 +26,7 @@ class Transaction {
     Date m_date;
    
     double m_total_cost;
-    static inline int s_id_generator { 1 };
+    static inline int s_id_generator { 0 };
     int m_transaction_id;
 };
 #endif // TRANSACTION_H

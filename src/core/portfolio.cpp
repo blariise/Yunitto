@@ -1,9 +1,11 @@
 #include "portfolio.h"
 
 Portfolio::Portfolio(std::string_view name)
-  : m_name { name } {}
+  : m_name { name }
+  , m_portfolio_id { s_id_generator++ } {}
 
 const std::string& Portfolio::getName() const { return m_name; }
+int Portfolio::getPortfolioId() const { return m_portfolio_id; }
 
 double Portfolio::getTotalValue() const {
   double value { 0 };
