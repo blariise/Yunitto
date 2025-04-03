@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "portfoliomanager.h"
 
 PortfolioManager::PortfolioManager() {}
@@ -11,4 +13,9 @@ double PortfolioManager::getTotalValue() const {
   for (const auto& portfolio : m_portfolios)
     value += portfolio->getTotalValue();
   return value;
+}
+
+void PortfolioManager::print() const {
+  for (const auto& portfolio : m_portfolios)
+    std::cout << portfolio->getName() << '\n'; 
 }

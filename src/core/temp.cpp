@@ -1,17 +1,14 @@
 #include <iostream>
 
-#include "portfoliomanager.h"
-#include "portfolio.h"
-#include "asset.h"
-#include "transaction.h"
+#include "controller.h"
 
-int main() { 
-  auto pm { std::make_unique<PortfolioManager>() };
-  std::cout << "HEllo first time! Create a portfolio(name): ";
-  std::string portfolio_name;
-  std::cin >> portfolio_name;
-  //auto crypto { std::make_unique<Portfolio>(portfolio_name) };
-  //pm->addPortfolio(crypto);
-
+int main() {
+  Controller controller { std::make_unique<PortfolioManager>() };
+  controller.print();
+  controller.createPortfolio("crypto");
+  controller.print();
+  controller.createPortfolio("etf");
+  controller.print();
+  return 0;
 }
 

@@ -13,6 +13,8 @@ class PortfolioManager {
 
     void addPortfolio(std::unique_ptr<Portfolio> portfolio);
     double getTotalValue() const;
+    void print() const;
+
   private:
     std::vector<std::unique_ptr<Portfolio>> m_portfolios; 
 };
