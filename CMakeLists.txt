@@ -12,7 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 file(GLOB SOURCES 
   "src/core/*.cpp"
   "src/views/*.cpp"
-  "src/controllers/*.cpp"
+  "src/controller/*.cpp"
 )
 
 # Collect all QML and other resource files (e.g., images) in the resources directory
