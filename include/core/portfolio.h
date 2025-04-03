@@ -17,12 +17,12 @@ class Portfolio {
     double getTotalValue() const;
     double getTotalProfit() const;
 
-    void addAsset(std::shared_ptr<Asset> asset);
+    void addAsset(std::unique_ptr<Asset> asset);
 
   private:
     std::string m_name;
 
-    std::vector<std::shared_ptr<Asset>> m_assets;
+    std::vector<std::unique_ptr<Asset>> m_assets;
 };
 #endif // PORTFOLIO_H
 

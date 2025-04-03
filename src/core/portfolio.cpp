@@ -19,6 +19,6 @@ double Portfolio::getTotalProfit() const {
   return profit;
 }
 
-void Portfolio::addAsset(std::shared_ptr<Asset> asset) {
-  m_assets.push_back(asset);
+void Portfolio::addAsset(std::unique_ptr<Asset> asset) {
+  m_assets.emplace_back(std::move(asset));
 }

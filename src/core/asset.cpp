@@ -15,14 +15,14 @@ double Asset::getCurrentPrice() const { return m_current_price; }
 double Asset::getQuantity() const { 
   double quantity { 0 };
   for (const auto& t : m_transactions)
-    quantity += t.getQuantity();
+    quantity += t->getQuantity();
   return quantity;
 }                 
 
 double Asset::getTotalCost() const {
   double total_cost { 0 };
   for (const auto& t : m_transactions)
-      total_cost += t.getTotalCost();
+      total_cost += t->getTotalCost();
   return total_cost;
 }
 
@@ -34,6 +34,6 @@ double Asset::getProfit() const {
    return getCurrentValue() - m_current_price; 
 }
 
-void Asset::addTransaction(const Transaction& transaction) {
-  m_transactions.push_back(transaction);
+void Asset::addTransaction(std::unique_ptr<Transaction> transaction) {
+  m_transactions.emplace_back(std::move(transaction));
 }

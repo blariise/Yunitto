@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string_view>
 #include <vector>
+#include <memory>
 
 #include "transaction.h"
 
@@ -23,7 +24,7 @@ class Asset {
     double getCurrentValue() const;
     double getProfit() const;
 
-    void addTransaction(const Transaction& transaction);
+    void addTransaction(std::unique_ptr<Transaction> transaction);
 
   private:
     std::string m_name;
@@ -33,7 +34,7 @@ class Asset {
 
     double m_current_price { 30 }; // temp value
     
-    std::vector<Transaction> m_transactions;
+    std::vector<std::unique_ptr<Transaction>> m_transactions;
 };
 #endif // ASSET_H
 
