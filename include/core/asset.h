@@ -13,7 +13,6 @@ class Asset {
     Asset() = delete;
     Asset(std::string_view name, std::string_view ticker, std::string_view type, std::string_view currency);
 
-    int getAssetId() const;
     const std::string& getName() const;
     const std::string& getTicker() const;
     const std::string& getType() const;
@@ -26,6 +25,8 @@ class Asset {
     double getProfit() const;
 
     void addTransaction(std::unique_ptr<Transaction> transaction);
+    void removeTransaction(std::size_t transaction_index);
+    void printTransactions() const;
 
   private:
     std::string m_name;
@@ -34,9 +35,6 @@ class Asset {
     std::string m_currency;
 
     double m_current_price { 30 }; // temp value
-    static inline int s_id_generator { 0 };
-    int m_asset_id;
-
     std::vector<std::unique_ptr<Transaction>> m_transactions;
 };
 #endif // ASSET_H

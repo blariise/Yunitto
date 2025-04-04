@@ -6,6 +6,9 @@
 #include "portfoliomanager.h"
 #include "asset.h"
 
+
+using Date = std::chrono::year_month_day;
+
 class Controller {
   public:
     Controller() = delete;
@@ -23,6 +26,21 @@ class Controller {
         std::string_view currency);
     void removeAsset(std::size_t portfolio_index,std::size_t asset_index);
     void printAssets(std::size_t portfolio_index) const;
+
+    void addTransaction(
+        std::size_t portfolio_index,
+        std::size_t asset_index,
+        double quantity,
+        double price,
+        std::string_view payment_currency,
+        Date date);
+    void removeTransaction(
+        std::size_t portfolio_index,
+        std::size_t asset_index,
+        std::size_t transaction_index);
+    void printTransactions(
+        std::size_t portfolio_index,
+        std::size_t asset_index) const;
 
   private:
     std::unique_ptr<PortfolioManager> m_portfolio_manager;

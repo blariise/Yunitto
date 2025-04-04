@@ -3,6 +3,8 @@
 
 #include "controller.h"
 
+using Date = std::chrono::year_month_day;
+
 Controller::Controller(std::unique_ptr<PortfolioManager> portfolio_manager)
   : m_portfolio_manager { std::move(portfolio_manager) } {}
 
@@ -36,4 +38,33 @@ void Controller::removeAsset(std::size_t portfolio_index, std::size_t asset_inde
 void Controller::printAssets(std::size_t portfolio_index) const {
   Portfolio& portfolio { m_portfolio_manager->getPortfolio(portfolio_index) };
   portfolio.printAssets();
+}
+
+void Controller::addTransaction(
+    std::size_t portfolio_index,
+    std::size_t asset_index,
+    double quantity,
+    double price,
+    std::string_view payment_currency,
+    Date date) {
+  Portfolio& portfolio { m_portfolio_manager->getPortfolio(portfolio_index) };
+  Asset& asset { portfolio.getAsset(asset_index) };
+  asset.addTransaction(std::make_unique<Transaction>(quantity, price, payment_currency, date));
+}
+
+void Controller::removeTransaction(
+    std::size_t portfolio_index,
+    std::size_t asset_index,
+    std::size_t transaction_index) {
+  Portfolio& portfolio { m_portfolio_manager->getPortfolio(portfolio_index) };
+  Asset& asset { portfolio.getAsset(asset_index) };
+  asset.removeTransaction(transaction_index);
+}
+
+void Controller::printTransactions(
+    std::size_t portfolio_index,
+    std::size_t asset_index) const {
+  Portfolio& portfolio { m_portfolio_manager->getPortfolio(portfolio_index) };
+  Asset& asset { portfolio.getAsset(asset_index) };
+  asset.printTransactions();
 }
