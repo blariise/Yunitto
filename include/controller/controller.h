@@ -11,8 +11,16 @@ class Controller {
     Controller() = delete;
     Controller(std::unique_ptr<PortfolioManager> portfolio_manager);
 
-    void createPortfolio(std::string_view name);
-    void print() const;
+    void addPortfolio(std::string_view name);
+    void removePortfolio(std::size_t portfolio_index);
+    void printPortfolios() const;
+
+    void addAsset(
+        std::size_t portfolio_index,
+        std::string_view name,
+        std::string_view ticker,
+        std::string_view type,
+        std::string_view currency);
 
   private:
     std::unique_ptr<PortfolioManager> m_portfolio_manager;
