@@ -12,8 +12,11 @@ class PortfolioManager {
     PortfolioManager();
 
     void addPortfolio(std::unique_ptr<Portfolio> portfolio);
+    void removePortfolio(std::size_t portfolio_index);
     double getTotalValue() const;
     void print() const;
+
+    Portfolio& getPortfolio(std::size_t portfolio_index);
 
   private:
     std::vector<std::unique_ptr<Portfolio>> m_portfolios; 
