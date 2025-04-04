@@ -10,9 +10,12 @@ class Transaction {
     using Date = std::chrono::year_month_day;
     
     Transaction() = delete;
-    Transaction(double quantity, double price, std::string_view payment_currency, Date date); 
+    Transaction(
+        double quantity,
+        double price,
+        std::string_view payment_currency,
+        Date date);
   
-    int getTransactionId() const;
     double getQuantity() const;
     double getPrice() const;
     const std::string& getPaymentCurrency() const;
@@ -26,7 +29,5 @@ class Transaction {
     Date m_date;
    
     double m_total_cost;
-    static inline int s_id_generator { 0 };
-    int m_transaction_id;
 };
 #endif // TRANSACTION_H
