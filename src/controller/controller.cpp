@@ -28,3 +28,12 @@ void Controller::addAsset(
   portfolio.addAsset(std::make_unique<Asset>(name, ticker, type, currency));
 }
 
+void Controller::removeAsset(std::size_t portfolio_index, std::size_t asset_index) {
+  Portfolio& portfolio { m_portfolio_manager->getPortfolio(portfolio_index) };
+  portfolio.removeAsset(asset_index);
+}
+
+void Controller::printAssets(std::size_t portfolio_index) const {
+  Portfolio& portfolio { m_portfolio_manager->getPortfolio(portfolio_index) };
+  portfolio.printAssets();
+}
