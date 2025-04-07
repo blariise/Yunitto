@@ -35,7 +35,6 @@ Asset& Portfolio::getAsset(std::size_t asset_index) {
 }
 
 void Portfolio::printAssets() const {
-  std::cout << "List assets of portfolio: " << m_name << '\n';
   for (const auto& asset : m_assets)
     std::cout << asset->getName() << '\n';
 }

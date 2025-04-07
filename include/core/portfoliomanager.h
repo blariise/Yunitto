@@ -15,6 +15,7 @@ class PortfolioManager {
     void removePortfolio(std::size_t portfolio_index);
     Portfolio& getPortfolio(std::size_t portfolio_index);
 
+    std::size_t getPortfoliosNumber() const;
     double getTotalValue() const;
     void print() const;
 

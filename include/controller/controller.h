@@ -17,6 +17,7 @@ class Controller {
     void addPortfolio(std::string_view name);
     void removePortfolio(std::size_t portfolio_index);
     void printPortfolios() const;
+    std::size_t getPortfoliosNumber() const;
 
     void addAsset(
         std::size_t portfolio_index,
