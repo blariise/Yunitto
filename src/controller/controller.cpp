@@ -72,3 +72,4 @@ void Controller::printTransactions(
   Asset& asset { portfolio.getAsset(asset_index) };
   asset.printTransactions();
 }
+
