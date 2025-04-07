@@ -12,8 +12,10 @@ void CliView::run() {
     
     int choice;
     std::cout << "Enter option: ";
-    if (!(std::cin >> choice)) {
-      continue;
+    while (!(std::cin >> choice)) {
+      choice = -1;
+      clearInputBuffer();
+      break;
     }
 
     switch (choice) {
