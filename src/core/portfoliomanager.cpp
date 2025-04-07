@@ -29,7 +29,7 @@ double PortfolioManager::getTotalValue() const {
 void PortfolioManager::print() const {
   int i { 0 };
   for (const auto& portfolio : m_portfolios)
-    std::cout << i++ << ". " << portfolio->getName() << '\n'; 
+    std::cout << ++i << ". " << portfolio->getName() << '\n'; 
 }
 
 Portfolio& PortfolioManager::getPortfolio(std::size_t portfolio_index) {
