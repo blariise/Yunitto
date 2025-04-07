@@ -20,6 +20,10 @@ void Controller::printPortfolios() const {
   m_portfolio_manager->print();
 }
 
+std::size_t Controller::getPortfoliosNumber() const {
+  return m_portfolio_manager->getPortfoliosNumber();
+}
+
 void Controller::addAsset(
     std::size_t portfolio_index,
     std::string_view name,
