@@ -43,3 +43,4 @@ const std::string& PortfolioManager::getPortfolioName(std::size_t portfolio_inde
 std::size_t PortfolioManager::getAssetsNumber(std::size_t portfolio_index) const {
   return m_portfolios.at(portfolio_index)->getAssetsNumber();
 }
+

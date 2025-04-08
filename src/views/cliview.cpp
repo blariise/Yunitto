@@ -163,10 +163,10 @@ void CliView::displayAssetManageMenu(std::size_t portfolio_index) {
   printAssets(portfolio_index);
   std::cout << "\nEnter an asset You want to manage\n";
   
-  std::string temp;
-  std::cin >> temp;
   // - 1, because portfolios are displayed from 1
-  
+  int asset_index { 
+    getValidInputNumberInRange(1, static_cast<int>(getAssetsNumber(portfolio_index))) };
+  displayTransactionMenu(portfolio_index, asset_index);
 }
 
 void CliView::displayAddAssetMenu(std::size_t portfolio_index) {
@@ -209,7 +209,6 @@ void CliView::displayRemoveAssetMenu(std::size_t portfolio_index) {
 
   int asset_index { 
     getValidInputNumberInRange(1, static_cast<int>(getAssetsNumber(portfolio_index))) };
-  std::cout << asset_index;
 
   // - 1, because portfolios are displayed from 1
   removeAsset(portfolio_index, asset_index - 1);
@@ -234,6 +233,51 @@ void CliView::removeAsset(std::size_t portfolio_index, std::size_t asset_index) 
 
 void CliView::printAssets(std::size_t portfolio_index) const {
   m_controller.printAssets(portfolio_index);
+}
+
+/// transaction
+
+void CliView::displayTransactionMenu(std::size_t portfolio_index, std::size_t asset_index) {
+  while (true) {
+    clearScreen();
+    std::string portfolio_name { m_controller.getPortfolioName(portfolio_index) };
+    std::cout << "=== Portfolio: " << portfolio_name << " #" << portfolio_index << ", "
+              << "asset #" << asset_index << " ===\n";
+    std::cout << "\nOptions\n";
+    std::cout << "1.List transactions\n";
+    std::cout << "2.Add transaction\n";
+    std::cout << "3.Remove transaction\n";
+    std::cout << "4.Back to portfolios\n";
+
+    int choice { getValidInputNumberInRange(1, 4) };
+    clearScreen();
+    switch (choice) {
+      case 1:
+        //displayTransactionManageMenu(portfolio_index);
+        break;
+      case 2:
+        //displayAddTransactionMenu(portfolio_index);
+        break;
+      case 3:
+        //displayRemoveTransactionMenu(portfolio_index);
+        break;
+      case 4:
+        return;
+      default:
+        std::cout << "Invalid option. Try again.\n";
+        break;
+    }
+  }
+}
+
+void CliView::addTransaction(
+    std::size_t portfolio_index,
+    std::size_t asset_index,
+    double quantity,
+    double price,
+    std::string_view payment_currency,
+    Date date) {
+  m_controller.addTransaction(portfolio_index, asset_index, quantity, price, payment_currency, date);
 }
 
 /// helpers
