@@ -73,3 +73,6 @@ void Controller::printTransactions(
   asset.printTransactions();
 }
 
+const std::string& Controller::getPortfolioName(std::size_t portfolio_index) const {
+  return m_portfolio_manager->getPortfolioName(portfolio_index);
+}
