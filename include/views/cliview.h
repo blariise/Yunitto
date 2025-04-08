@@ -14,20 +14,30 @@ class CliView {
   private:
     Controller& m_controller;
 
+    // portfolio
     void displayMainMenu() const;
     void displayPortfolioMenu();
-    void displayAddPortfolioMenu() const;
-    void displayRemovePortfolioMenu() const;
-    void displayAssetMenu() const;
-    void displayTransactionMenu() const;
-  
-    void printPortfolios() const;
-    void printAssets(std::size_t portfolio_index) const;
-    void printTransactions(std::size_t portfolio_index, std::size_t asset_index) const;
+    void displayAddPortfolioMenu();
+    void displayRemovePortfolioMenu();
 
+    void printPortfolios() const;
     std::size_t getPortfoliosNumber() const;
     void addPortfolio(std::string_view name);
-    void removePortfolio(std::size_t portfolio_index) const;
+    void removePortfolio(std::size_t portfolio_index);
+
+
+    /// asset
+    void displayAssetMenu() const;
+    void addAssetMenu(std::size_t portfolio_index);
+    void removeAssetMenu(std::size_t portfolio_index);
+    void printAssets(std::size_t portfolio_index) const;
+    
+    /// transaction
+    void displayTransactionMenu() const;
+  
+    void printTransactions(std::size_t portfolio_index, std::size_t asset_index) const;
+
+
 
 };
 

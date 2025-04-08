@@ -33,6 +33,8 @@ void CliView::run() {
   }
 }
 
+/// Portfolio
+
 void CliView::displayMainMenu() const {
   std::cout << "==PortfolioManager==\n";
   std::cout << "\nOptions\n";
@@ -40,35 +42,6 @@ void CliView::displayMainMenu() const {
   std::cout << "2.Add portfolio\n";
   std::cout << "3.Remove portfolio\n";
   std::cout << "4.Exit\n";
-}
-
-void CliView::displayAddPortfolioMenu() const {
-  std::cout << "===Add portfolio===\n";
-  std::cout << "Enter name of porfolio You want to add: ";
-  std::string portfolio_name;
-  std::getline(std::cin, portfolio_name);
-  if (portfolio_name.empty())
-    return;
-  m_controller.addPortfolio(portfolio_name);
-}
-
-void CliView::displayRemovePortfolioMenu() const {
-  std::cout << "===Remove portfolio===\n";
-  
-  printPortfolios();
-
-  // no portfolio
-  if (getPortfoliosNumber() == 0) {
-    std::cout << "No portfolio to remove\n";
-    std::string temp;
-    std::getline(std::cin, temp);
-    return;
-  }
-
-  int portfolio_index { getValidInputNumberInRange(1, static_cast<int>(getPortfoliosNumber())) };
-  std::cout << portfolio_index; 
-
-  removePortfolio(portfolio_index - 1);
 }
 
 void CliView::displayPortfolioMenu() {
@@ -84,10 +57,39 @@ void CliView::displayPortfolioMenu() {
 
   printPortfolios();
 
-  std::cout << "\nEnter a portfolio You want to manage: ";
-  int portfolio_index { getValidInputNumberInRange(1, static_cast<int>(getPortfoliosNumber())) };
-  std::cout << portfolio_index; 
+  std::cout << "\nEnter a portfolio You want to manage\n";
+  int portfolio_index {
+    getValidInputNumberInRange(1, static_cast<int>(getPortfoliosNumber())) };
+}
+
+void CliView::displayAddPortfolioMenu() {
+  std::cout << "===Add portfolio===\n";
+  std::cout << "Enter name of porfolio to add or empty enter to exit: ";
+  std::string portfolio_name;
+  std::getline(std::cin, portfolio_name);
+  if (portfolio_name.empty())
+    return;
+  m_controller.addPortfolio(portfolio_name);
+}
+
+void CliView::displayRemovePortfolioMenu() {
+  std::cout << "===Remove portfolio===\n";
   
+  printPortfolios();
+
+  // no portfolio
+  if (getPortfoliosNumber() == 0) {
+    std::cout << "No portfolio to remove\n";
+    std::string temp;
+    std::getline(std::cin, temp);
+    return;
+  }
+
+  int portfolio_index { 
+    getValidInputNumberInRange(1, static_cast<int>(getPortfoliosNumber())) };
+  std::cout << portfolio_index; 
+
+  removePortfolio(portfolio_index - 1);
 }
 
 void CliView::printPortfolios() const {
@@ -102,9 +104,14 @@ void CliView::addPortfolio(std::string_view name) {
   m_controller.addPortfolio(name);
 }
 
-void CliView::removePortfolio(std::size_t portfolio_index) const {
+void CliView::removePortfolio(std::size_t portfolio_index) {
   m_controller.removePortfolio(portfolio_index);
 }
+
+/// Asset
+
+
+
 
 void clearInputBuffer() {
   std::cin.clear();
