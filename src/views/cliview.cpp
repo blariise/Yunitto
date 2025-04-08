@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 
 #include "cliview.h"
 
@@ -9,21 +10,13 @@ void CliView::run() {
   while(true) {
     clearScreen();
     displayMainMenu();
-    
-    int choice;
-    std::cout << "Enter option: ";
-    while (!(std::cin >> choice)) {
-      choice = -1;
-      clearInputBuffer();
-      break;
-    }
 
+    int choice { getValidInputNumberInRange(1, 4) };
+
+    clearScreen();
     switch (choice) {
       case 1:
-        clearScreen();
-        printPortfolios();
-        int temp;
-        std::cin >> temp;
+        displayPortfolioMenu();
         break;
       case 2:
         displayAddPortfolioMenu();
@@ -34,10 +27,9 @@ void CliView::run() {
       case 4:
         return;
       default:
-        std::cout << "Wrong input\n";
+        std::cout << "Invalid option. Try again.\n";
         break;
     }
-  
   }
 }
 
@@ -51,27 +43,51 @@ void CliView::displayMainMenu() const {
 }
 
 void CliView::displayAddPortfolioMenu() const {
-  clearInputBuffer();
-  clearScreen();
   std::cout << "===Add portfolio===\n";
   std::cout << "Enter name of porfolio You want to add: ";
   std::string portfolio_name;
   std::getline(std::cin, portfolio_name);
+  if (portfolio_name.empty())
+    return;
   m_controller.addPortfolio(portfolio_name);
 }
 
 void CliView::displayRemovePortfolioMenu() const {
-  clearScreen();
   std::cout << "===Remove portfolio===\n";
-  printPortfolios();
-  std::cout << "Enter number of portfolio You want to remove: ";
-  std::size_t portfolio_index;
   
-  while (!(std::cin >> portfolio_index) ||
-          portfolio_index > getPortfoliosNumber() - 1) {
-    std::cout << "Enter a valid number!: ";
+  printPortfolios();
+
+  // no portfolio
+  if (getPortfoliosNumber() == 0) {
+    std::cout << "No portfolio to remove\n";
+    std::string temp;
+    std::getline(std::cin, temp);
+    return;
   }
-  removePortfolio(portfolio_index);
+
+  int portfolio_index { getValidInputNumberInRange(1, static_cast<int>(getPortfoliosNumber())) };
+  std::cout << portfolio_index; 
+
+  removePortfolio(portfolio_index - 1);
+}
+
+void CliView::displayPortfolioMenu() {
+  std::cout << "===Select portfolio===\n";
+
+  if (getPortfoliosNumber() == 0) {
+    std::cout << "No portfolios\n";
+    std::cout << "Press enter to continue: ";
+    std::string escape;
+    std::getline(std::cin, escape);
+    return;
+  }
+
+  printPortfolios();
+
+  std::cout << "\nEnter a portfolio You want to manage: ";
+  int portfolio_index { getValidInputNumberInRange(1, static_cast<int>(getPortfoliosNumber())) };
+  std::cout << portfolio_index; 
+  
 }
 
 void CliView::printPortfolios() const {
@@ -90,12 +106,25 @@ void CliView::removePortfolio(std::size_t portfolio_index) const {
   m_controller.removePortfolio(portfolio_index);
 }
 
-void clearScreen() {
-  std::cout << "\033[2J\033[1;1H";
-}
-
 void clearInputBuffer() {
   std::cin.clear();
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
 }
 
+void clearScreen() {
+  std::cout << "\033[2J\033[1;1H"; // idk googled it
+}
+
+int getValidInputNumberInRange(int min, int max) {
+  int choice;
+  while (true) {
+    std::cout << "Enter number: ";
+    if (std::cin >> choice && choice >= min && choice <= max) {
+      clearInputBuffer();
+      return choice;
+    } else {
+      std::cout << "Invalid input.\n";
+      clearInputBuffer();
+    }
+  }
+}

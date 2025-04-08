@@ -1,6 +1,8 @@
 #ifndef CLI_VIEW_H
 #define CLI_VIEW_H
 
+#include <optional>
+
 #include "controller.h"
 
 class CliView {
@@ -13,7 +15,7 @@ class CliView {
     Controller& m_controller;
 
     void displayMainMenu() const;
-    void displayPortfolioMenu() const;
+    void displayPortfolioMenu();
     void displayAddPortfolioMenu() const;
     void displayRemovePortfolioMenu() const;
     void displayAssetMenu() const;
@@ -29,8 +31,9 @@ class CliView {
 
 };
 
-void clearScreen();
 void clearInputBuffer();
+void clearScreen();
+int getValidInputNumberInRange(int min, int max);
 
 #endif // CLI_VIEW_H
 
