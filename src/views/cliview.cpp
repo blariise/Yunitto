@@ -125,7 +125,7 @@ void CliView::displayAssetMenu(std::size_t portfolio_index) {
     std::cout << "1.Manage assets\n";
     std::cout << "2.Add asset\n";
     std::cout << "3.Remove asset\n";
-    std::cout << "4.Exit\n";
+    std::cout << "4.Back to portfolios\n";
 
     int choice { getValidInputNumberInRange(1, 4) };
     clearScreen();
@@ -134,8 +134,10 @@ void CliView::displayAssetMenu(std::size_t portfolio_index) {
         displayAssetManageMenu(portfolio_index);
         break;
       case 2:
+        displayAddAssetMenu(portfolio_index);
         break;
       case 3:
+        displayRemoveAssetMenu(portfolio_index);
         break;
       case 4:
         return;
@@ -158,12 +160,80 @@ void CliView::displayAssetManageMenu(std::size_t portfolio_index) {
     return;
   }
 
-  std::cout << "\nEnter a portfolio You want to manage\n";
+  printAssets(portfolio_index);
+  std::cout << "\nEnter an asset You want to manage\n";
+  
+  std::string temp;
+  std::cin >> temp;
   // - 1, because portfolios are displayed from 1
+  
+}
+
+void CliView::displayAddAssetMenu(std::size_t portfolio_index) {
+  std::cout << "===Add asset===\n";
+  std::cout << "Enter name of asset to add or empty enter to exit: ";
+
+  std::string asset_name;
+  std::getline(std::cin, asset_name);
+  if (asset_name.empty())
+    return;
+
+  std::string asset_ticker;
+  std::string asset_type;
+  std::string asset_currency;
+  
+  std::cout << "Enter ticker: ";
+  std::cin >> asset_ticker;
+
+  std::cout << "Enter type: ";
+  std::cin >> asset_type;
+
+  std::cout << "Enter currency: ";
+  std::cin >> asset_currency;
+
+  addAsset(portfolio_index, asset_name, asset_ticker, asset_type, asset_currency);
+}
+
+void CliView::displayRemoveAssetMenu(std::size_t portfolio_index) {
+  std::cout << "===Remove assets===\n";
+  
+  printAssets(portfolio_index);
+
+  // no portfolio
+  if (getAssetsNumber(portfolio_index) == 0) {
+    std::cout << "No assets to remove\n";
+    std::string temp;
+    std::getline(std::cin, temp);
+    return;
+  }
+
+  int asset_index { 
+    getValidInputNumberInRange(1, static_cast<int>(getAssetsNumber(portfolio_index))) };
+  std::cout << asset_index;
+
+  // - 1, because portfolios are displayed from 1
+  removeAsset(portfolio_index, asset_index - 1);
 }
 
 std::size_t CliView::getAssetsNumber(std::size_t portfolio_index) const {
   return m_controller.getAssetsNumber(portfolio_index);
+}
+
+void CliView::addAsset(
+    std::size_t portfolio_index,
+    std::string_view name,
+    std::string_view ticker,
+    std::string_view type,
+    std::string_view currency) {
+  m_controller.addAsset(portfolio_index, name, ticker, type, currency);
+}
+
+void CliView::removeAsset(std::size_t portfolio_index, std::size_t asset_index) {
+  m_controller.removeAsset(portfolio_index, asset_index);
+}
+
+void CliView::printAssets(std::size_t portfolio_index) const {
+  m_controller.printAssets(portfolio_index);
 }
 
 /// helpers
@@ -190,3 +260,4 @@ int getValidInputNumberInRange(int min, int max) {
     }
   }
 }
+
