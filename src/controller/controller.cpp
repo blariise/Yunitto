@@ -24,6 +24,10 @@ std::size_t Controller::getPortfoliosNumber() const {
   return m_portfolio_manager->getPortfoliosNumber();
 }
 
+std::size_t Controller::getAssetsNumber(std::size_t portfolio_index) const {
+  return m_portfolio_manager->getAssetsNumber(portfolio_index);
+}
+
 void Controller::addAsset(
     std::size_t portfolio_index,
     std::string_view name,
@@ -76,3 +80,4 @@ void Controller::printTransactions(
 const std::string& Controller::getPortfolioName(std::size_t portfolio_index) const {
   return m_portfolio_manager->getPortfolioName(portfolio_index);
 }
+

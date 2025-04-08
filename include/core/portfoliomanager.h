@@ -20,6 +20,8 @@ class PortfolioManager {
     void print() const;
     const std::string& getPortfolioName(std::size_t portfolio_index) const;
 
+    std::size_t getAssetsNumber(std::size_t portfolio_index) const;
+
   private:
     std::vector<std::unique_ptr<Portfolio>> m_portfolios; 
 };

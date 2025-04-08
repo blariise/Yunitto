@@ -16,6 +16,7 @@ class CliView {
 
     // portfolio
     void displayMainMenu();
+
     void displayPortfolioMenu();
     void displayAddPortfolioMenu();
     void displayRemovePortfolioMenu();
@@ -30,10 +31,12 @@ class CliView {
 
     /// asset
     void displayAssetMenu(std::size_t portfolio_index);
+    void displayAssetManageMenu(std::size_t portfolio_index);
     void addAssetMenu(std::size_t portfolio_index);
     void removeAssetMenu(std::size_t portfolio_index);
     void printAssets(std::size_t portfolio_index) const;
 
+    std::size_t getAssetsNumber(std::size_t portfolio_index) const;
     /// transaction
     void displayTransactionMenu() const;
   

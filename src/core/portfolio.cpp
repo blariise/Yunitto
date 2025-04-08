@@ -39,3 +39,6 @@ void Portfolio::printAssets() const {
     std::cout << asset->getName() << '\n';
 }
 
+std::size_t Portfolio::getAssetsNumber() const {
+  return std::size(m_assets);
+}

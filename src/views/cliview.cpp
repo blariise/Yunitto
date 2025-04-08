@@ -116,10 +116,54 @@ void CliView::removePortfolio(std::size_t portfolio_index) {
 /// Asset
 
 void CliView::displayAssetMenu(std::size_t portfolio_index) {
-  std::string portfolio_name { m_controller.getPortfolioName(portfolio_index) };
-  std::cout << portfolio_name;
-  std::string temp;
-  std::cin >> temp;
+  while (true) {
+    clearScreen();
+    std::string portfolio_name { m_controller.getPortfolioName(portfolio_index) };
+    std::cout << "=== Portfolio: " << portfolio_name << " #" << portfolio_index << " ===\n";
+    // print portfolio value;
+    std::cout << "\nOptions\n";
+    std::cout << "1.Manage assets\n";
+    std::cout << "2.Add asset\n";
+    std::cout << "3.Remove asset\n";
+    std::cout << "4.Exit\n";
+
+    int choice { getValidInputNumberInRange(1, 4) };
+    clearScreen();
+    switch (choice) {
+      case 1:
+        displayAssetManageMenu(portfolio_index);
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        return;
+      default:
+        std::cout << "Invalid option. Try again.\n";
+        break;
+    }
+  }
+}
+
+void CliView::displayAssetManageMenu(std::size_t portfolio_index) {
+  std::cout << "=== Select asset ===\n";
+
+  // getAssetsNumber()
+  if (getAssetsNumber(portfolio_index) == 0) {
+    std::cout << "No assets\n";
+    std::cout << "Press enter to continue: ";
+    std::string escape;
+    std::getline(std::cin, escape);
+    return;
+  }
+
+  std::cout << "\nEnter a portfolio You want to manage\n";
+  // - 1, because portfolios are displayed from 1
+}
+
+std::size_t CliView::getAssetsNumber(std::size_t portfolio_index) const {
+  return m_controller.getAssetsNumber(portfolio_index);
 }
 
 /// helpers

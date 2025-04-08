@@ -16,7 +16,8 @@ class Portfolio {
     const std::string& getName() const;
     double getTotalValue() const;
     double getTotalProfit() const;
-    
+    std::size_t getAssetsNumber() const;
+
     void addAsset(std::unique_ptr<Asset> asset);
     void removeAsset(std::size_t asset_index);
     Asset& getAsset(std::size_t asset_index);
