@@ -3,6 +3,8 @@
 
 #include "cliview.h"
 
+using Date = std::chrono::year_month_day;
+
 CliView::CliView(Controller& controller) :
   m_controller { controller } {}
 
@@ -163,10 +165,10 @@ void CliView::displayAssetManageMenu(std::size_t portfolio_index) {
   printAssets(portfolio_index);
   std::cout << "\nEnter an asset You want to manage\n";
   
-  // - 1, because portfolios are displayed from 1
   int asset_index { 
     getValidInputNumberInRange(1, static_cast<int>(getAssetsNumber(portfolio_index))) };
-  displayTransactionMenu(portfolio_index, asset_index);
+  // - 1, because portfolios are displayed from 1
+  displayTransactionMenu(portfolio_index, asset_index - 1);
 }
 
 void CliView::displayAddAssetMenu(std::size_t portfolio_index) {
@@ -253,13 +255,13 @@ void CliView::displayTransactionMenu(std::size_t portfolio_index, std::size_t as
     clearScreen();
     switch (choice) {
       case 1:
-        //displayTransactionManageMenu(portfolio_index);
+        displayTransactionManageMenu(portfolio_index, asset_index);
         break;
       case 2:
-        //displayAddTransactionMenu(portfolio_index);
+        displayAddTransactionMenu(portfolio_index, asset_index);
         break;
       case 3:
-        //displayRemoveTransactionMenu(portfolio_index);
+        displayRemoveTransactionMenu(portfolio_index, asset_index);
         break;
       case 4:
         return;
@@ -270,6 +272,60 @@ void CliView::displayTransactionMenu(std::size_t portfolio_index, std::size_t as
   }
 }
 
+void CliView::displayTransactionManageMenu(std::size_t portfolio_index, std::size_t asset_index) {
+  printTransactions(portfolio_index, asset_index);
+  std::string temp;
+  std::cin >> temp;
+}
+
+void CliView::displayAddTransactionMenu(std::size_t portfolio_index, std::size_t asset_index) {
+  std::cout << "===Add transaction===\n";
+
+  double quantity;
+  double price;
+  std::string payment_currency;
+  Date date;
+
+  std::cout << "Enter quantity: ";
+  std::cin >> quantity;
+
+  std::cout << "Enter price: ";
+  std::cin >> price;
+
+  std::cout << "Enter payment currency: ";
+  std::cin >> payment_currency;
+
+  std::cout << "Enter date (DD-MM-YYYY): ";
+  std::string temp_date;
+  std::cin >> temp_date;
+
+  std::istringstream iss { temp_date };
+  iss >> std::chrono::parse("%d-%m-%Y", date);
+
+  addTransaction(portfolio_index, asset_index, quantity, price, payment_currency, date);
+}
+
+void CliView::displayRemoveTransactionMenu(std::size_t portfolio_index, std::size_t asset_index) {
+  std::cout << "===Remove transaction===\n";
+  
+  printTransactions(portfolio_index, asset_index);
+
+  // no transactions
+  if (getTransactionsNumber(portfolio_index, asset_index) == 0) {
+    std::cout << "No transaction to remove\n";
+    std::string temp;
+    std::getline(std::cin, temp);
+    return;
+  }
+
+  int transaction_index { 
+    getValidInputNumberInRange(1, static_cast<int>(getTransactionsNumber(portfolio_index, asset_index))) };
+
+  // - 1, because transaction are displayed from 1
+  --transaction_index;
+  removeTransaction(portfolio_index, asset_index, portfolio_index);
+}
+
 void CliView::addTransaction(
     std::size_t portfolio_index,
     std::size_t asset_index,
@@ -278,6 +334,21 @@ void CliView::addTransaction(
     std::string_view payment_currency,
     Date date) {
   m_controller.addTransaction(portfolio_index, asset_index, quantity, price, payment_currency, date);
+}
+
+void CliView::removeTransaction(
+    std::size_t portfolio_index,
+    std::size_t asset_index,
+    std::size_t transaction_index) {
+  m_controller.removeTransaction(portfolio_index, asset_index, transaction_index);
+}
+
+void CliView::printTransactions(std::size_t portfolio_index, std::size_t asset_index) const {
+  m_controller.printTransactions(portfolio_index, asset_index);
+}
+
+std::size_t CliView::getTransactionsNumber(std::size_t portfolio_index, std::size_t asset_index) const {
+  return m_controller.getTransactionsNumber(portfolio_index, asset_index);
 }
 
 /// helpers

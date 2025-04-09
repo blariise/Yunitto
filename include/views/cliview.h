@@ -61,7 +61,13 @@ class CliView {
         std::string_view payment_currency,
         Date date);
 
+    void removeTransaction(
+        std::size_t portfolio_index,
+        std::size_t asset_index,
+        std::size_t transaction_index);
+
     void printTransactions(std::size_t portfolio_index, std::size_t asset_index) const;
+    std::size_t getTransactionsNumber(std::size_t portfolio_index, std::size_t asset_index) const;
 };
 
 /// helpers

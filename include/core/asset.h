@@ -28,6 +28,8 @@ class Asset {
     void removeTransaction(std::size_t transaction_index);
     void printTransactions() const;
 
+    std::size_t getTransactionsNumber() const;
+
   private:
     std::string m_name;
     std::string m_ticker;

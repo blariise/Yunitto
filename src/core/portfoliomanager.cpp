@@ -32,7 +32,7 @@ void PortfolioManager::print() const {
     std::cout << ++i << ". " << portfolio->getName() << '\n'; 
 }
 
-Portfolio& PortfolioManager::getPortfolio(std::size_t portfolio_index) {
+Portfolio& PortfolioManager::getPortfolio(std::size_t portfolio_index) const {
   return *m_portfolios.at(portfolio_index);
 }
 
@@ -42,5 +42,15 @@ const std::string& PortfolioManager::getPortfolioName(std::size_t portfolio_inde
 
 std::size_t PortfolioManager::getAssetsNumber(std::size_t portfolio_index) const {
   return m_portfolios.at(portfolio_index)->getAssetsNumber();
+}
+
+std::size_t PortfolioManager::getTransactionsNumber(
+    std::size_t portfolio_index,
+    std::size_t asset_index) const {
+  return getAsset(portfolio_index, asset_index).getTransactionsNumber();
+}
+
+Asset& PortfolioManager::getAsset(std::size_t portfolio_index, std::size_t asset_index) const {
+  return getPortfolio(portfolio_index).getAsset(asset_index);
 }
 

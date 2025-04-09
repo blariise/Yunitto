@@ -50,3 +50,7 @@ void Asset::printTransactions() const {
   for (const auto& transaction : m_transactions)
     std::cout << transaction->getDate() << '\n';
 }
+
+std::size_t Asset::getTransactionsNumber() const {
+  return std::size(m_transactions);
+}

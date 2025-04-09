@@ -44,6 +44,9 @@ class Controller {
     void printTransactions(
         std::size_t portfolio_index,
         std::size_t asset_index) const;
+    std::size_t getTransactionsNumber(
+        std::size_t portfolio_index,
+        std::size_t asset_index) const;
 
   private:
     std::unique_ptr<PortfolioManager> m_portfolio_manager;

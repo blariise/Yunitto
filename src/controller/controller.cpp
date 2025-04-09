@@ -28,6 +28,12 @@ std::size_t Controller::getAssetsNumber(std::size_t portfolio_index) const {
   return m_portfolio_manager->getAssetsNumber(portfolio_index);
 }
 
+std::size_t Controller::getTransactionsNumber(
+    std::size_t portfolio_index,
+    std::size_t asset_index) const {
+  return m_portfolio_manager->getTransactionsNumber(portfolio_index, asset_index);
+}
+
 void Controller::addAsset(
     std::size_t portfolio_index,
     std::string_view name,
