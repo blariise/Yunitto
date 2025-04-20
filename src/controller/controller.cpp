@@ -16,12 +16,20 @@ void Controller::removePortfolio(std::size_t portfolio_index) {
   m_portfolio_manager->removePortfolio(portfolio_index);
 }
 
+double Controller::getPortfoliosTotalValue() const {
+  return m_portfolio_manager->getTotalValue();
+}
+
 void Controller::printPortfolios() const {
   m_portfolio_manager->print();
 }
 
 std::size_t Controller::getPortfoliosNumber() const {
   return m_portfolio_manager->getPortfoliosNumber();
+}
+
+const std::vector<std::unique_ptr<Portfolio>>& Controller::getPortfolios() const {
+  return m_portfolio_manager->getPortfolios();
 }
 
 std::size_t Controller::getAssetsNumber(std::size_t portfolio_index) const {

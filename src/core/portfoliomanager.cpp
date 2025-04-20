@@ -19,6 +19,10 @@ std::size_t PortfolioManager::getPortfoliosNumber() const {
   return std::size(m_portfolios);
 }
 
+const std::vector<std::unique_ptr<Portfolio>>& PortfolioManager::getPortfolios() const {
+  return m_portfolios;
+}
+
 double PortfolioManager::getTotalValue() const {
   double value { 0 };
   for (const auto& portfolio : m_portfolios)
