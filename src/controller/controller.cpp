@@ -62,6 +62,10 @@ void Controller::printAssets(std::size_t portfolio_index) const {
   portfolio.printAssets();
 }
 
+const std::vector<std::unique_ptr<Asset>>& Controller::getAssets(std::size_t portfolio_index) const {
+  return m_portfolio_manager->getAssets(portfolio_index);
+}
+
 void Controller::addTransaction(
     std::size_t portfolio_index,
     std::size_t asset_index,

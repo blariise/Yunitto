@@ -43,3 +43,7 @@ void Portfolio::printAssets() const {
 std::size_t Portfolio::getAssetsNumber() const {
   return std::size(m_assets);
 }
+
+const std::vector<std::unique_ptr<Asset>>& Portfolio::getAssets() const {
+  return m_assets;
+}

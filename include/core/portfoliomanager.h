@@ -27,6 +27,8 @@ class PortfolioManager {
         std::size_t asset_index) const;
   
     Asset& getAsset(std::size_t portfolio_index, std::size_t asset_index) const;
+    const std::vector<std::unique_ptr<Asset>>& getAssets(
+        std::size_t portfolio_index) const;
 
   private:
     std::vector<std::unique_ptr<Portfolio>> m_portfolios; 
