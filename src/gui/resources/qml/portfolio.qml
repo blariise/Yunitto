@@ -3,8 +3,13 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Rectangle {
+  property int root_width
+  property int root_height
+  property int portfolio_index
+
+  id: root
   width: 800
-  height: 600
+  height: 720
 
   ColumnLayout {
     anchors.fill: parent
@@ -22,49 +27,105 @@ Rectangle {
         spacing: 10
 
         Text {
+          anchors.horizontalCenter: parent.horizontalCenter
           color: "white"
           font.pointSize: 20
-          text: "Total value: " + controller.total_value
+          text: controller.portfolio_name
+        }
+
+        Text {
+          color: "white"
+          font.pointSize: 20
+          text: " Total value: " + controller.total_value
         }
 
         Button {
           anchors.horizontalCenter: parent.horizontalCenter
-          text: "Add portfolio"
-          onClicked: add_portfolio_dialog.open()
+          text: "Add asset"
+          onClicked: add_asset_dialog.open()
         }
       }
 
       Dialog {
-        id: add_portfolio_dialog
+        id: add_asset_dialog
         anchors.centerIn: parent
         modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
+        height: 300
 
         contentItem: ColumnLayout {
-          spacing: 20
           width: parent.width
 
           Label {
-            text: "Enter portfolio name:"
+            text: "Name:"
             Layout.alignment: Qt.AlignLeft
           }
 
           TextField {
-            id: portfolio_name_field
+            id: asset_name_field
             Layout.fillWidth: true
             focus: true
 
             Component.onCompleted: {
-              add_portfolio_dialog.aboutToShow.connect(function() {
-                portfolio_name_field.text = ""
+              add_asset_dialog.aboutToShow.connect(function() {
+                asset_name_field.text = ""
               })
             }
           }
+
+          Label {
+            text: "Ticker:"
+            Layout.alignment: Qt.AlignLeft
+          }
+
+          TextField {
+            id: asset_ticker_field
+            Layout.fillWidth: true
+            focus: true
+
+            Component.onCompleted: {
+              add_asset_dialog.aboutToShow.connect(function() {
+                asset_ticker_field.text = ""
+              })
+            }
+          }
+
+          Label {
+            text: "Type:"
+            Layout.alignment: Qt.AlignLeft
+          }
+
+          ComboBox {
+            id: asset_type_field
+            Layout.fillWidth: true
+            focus: true
+            model: ["Crypto", "ETF", "Stock"]
+          }
+
+          Label {
+            text: "Currency:"
+            Layout.alignment: Qt.AlignLeft
+          }
+
+          ComboBox {
+            id: asset_currency_field
+            Layout.fillWidth: true
+            focus: true
+            model: ["PLN", "EUR", "USD"]
+          }       
+
         }
 
         onAccepted: {
-          if (portfolio_name_field.text.trim() !== "") {
-            controller.addPortfolio(portfolio_name_field.text)
+          if (asset_name_field.text.trim() !== "") {
+            if (asset_ticker_field.text.trim() !== "") {
+              controller.addAsset(
+                portfolio_index,
+                asset_name_field.text,
+                asset_ticker_field.text,
+                asset_type_field.currentText,
+                asset_currency_field.text)
+            }
           }
         }
       }
@@ -79,7 +140,7 @@ Rectangle {
 
       ListView {
         id: portfolioListView
-        model: controller.portfolios
+        model: controller.assets
         anchors.fill: parent
         clip: true
         spacing: 10
@@ -115,14 +176,13 @@ Rectangle {
             RowLayout {
               Column {
                 spacing: 3
-                visible: controller.portfolios_number > 0
+                //visible: controller.portfolios_number > 0
 
                 Button {
                   x: 0
                   text: "Manage"
                   highlighted: true
                   onClicked: {
-                    controller.setCurrentPortfolio(index)
                     main_stack_view.push("portfolio.qml", {"portfolio_index": index})
                   }
                 }
@@ -131,7 +191,7 @@ Rectangle {
                   text: "Remove"
                   highlighted: true
                   onClicked: {
-                    controller.removePortfolio(index)
+                    controller.removeAsset(root.portfolio_index, index)
                   }
                 }
               }
