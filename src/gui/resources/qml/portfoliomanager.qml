@@ -3,8 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Rectangle {
-  width: 800
-  height: 600
+  id: root
 
   ColumnLayout {
     anchors.fill: parent
@@ -15,7 +14,7 @@ Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: parent.height * 0.2
       color: "#130e2b"
-      border.color: "black"
+      //border.color: "black"
 
       Column {
         anchors.centerIn: parent
@@ -75,7 +74,7 @@ Rectangle {
       Layout.fillWidth: true
       Layout.fillHeight: true
       color: "#130e2b"
-      border.color: "black"
+      //border.color: "black"
 
       ListView {
         id: portfolioListView
@@ -106,7 +105,7 @@ Rectangle {
               }
 
               Text {
-                text: "Value: "
+                text: "Value: " + controller.getPortfolioValue(index)
                 font.pointSize: 10
                 color: "gray"
               }
