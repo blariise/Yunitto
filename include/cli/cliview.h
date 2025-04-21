@@ -58,6 +58,7 @@ class CliView {
         std::size_t asset_index,
         double quantity,
         double price,
+        std::string_view type,
         std::string_view payment_currency,
         Date date);
 

@@ -5,7 +5,7 @@ Portfolio::Portfolio(std::string_view name)
 
 const std::string& Portfolio::getName() const { return m_name; }
 
-double Portfolio::getTotalValue() const {
+double Portfolio::getValue() const {
   double value { 0 };
   for (const auto& asset : m_assets)
     value += asset->getCurrentValue();

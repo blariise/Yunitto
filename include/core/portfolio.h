@@ -14,7 +14,7 @@ class Portfolio {
     Portfolio(std::string_view name);
 
     const std::string& getName() const;
-    double getTotalValue() const;
+    double getValue() const;
     double getTotalProfit() const;
     std::size_t getAssetsNumber() const;
     const std::vector<std::unique_ptr<Asset>>& getAssets() const;

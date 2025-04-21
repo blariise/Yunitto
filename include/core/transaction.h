@@ -13,11 +13,13 @@ class Transaction {
     Transaction(
         double quantity,
         double price,
+        std::string_view type,
         std::string_view payment_currency,
         Date date);
   
     double getQuantity() const;
     double getPrice() const;
+    const std::string& getType() const;
     const std::string& getPaymentCurrency() const;
     const Date getDate() const;
     double getTotalCost() const;
@@ -25,6 +27,7 @@ class Transaction {
   private:
     double m_quantity;
     double m_price;
+    std::string m_type;
     std::string m_payment_currency;
     Date m_date;
    

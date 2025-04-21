@@ -26,8 +26,12 @@ const std::vector<std::unique_ptr<Portfolio>>& PortfolioManager::getPortfolios()
 double PortfolioManager::getTotalValue() const {
   double value { 0 };
   for (const auto& portfolio : m_portfolios)
-    value += portfolio->getTotalValue();
+    value += portfolio->getValue();
   return value;
+}
+
+double PortfolioManager::getPortfolioValue(std::size_t portfolio_index) const {
+  return m_portfolios.at(portfolio_index)->getValue();
 }
 
 void PortfolioManager::print() const {

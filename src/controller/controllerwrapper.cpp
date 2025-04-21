@@ -1,4 +1,5 @@
 #include "controllerwrapper.h"
+#include <QDebug>
 
 ControllerWrapper::ControllerWrapper(std::unique_ptr<Controller> controller, QObject* parent)
   : QObject { parent }
@@ -26,6 +27,10 @@ double ControllerWrapper::getPortfoliosTotalValue() const {
   return m_controller->getPortfoliosTotalValue();
 }
 
+double ControllerWrapper::getPortfolioValue(std::size_t portfolio_index) const {
+  return m_controller->getPortfolioValue(portfolio_index);
+}
+
 QStringList ControllerWrapper::getPortfoliosList() const {
   QStringList list {};
   const auto& portfolios { m_controller->getPortfolios() };
@@ -38,6 +43,10 @@ QStringList ControllerWrapper::getPortfoliosList() const {
 void ControllerWrapper::setCurrentPortfolio(std::size_t portfolio_index) {
   m_current_portfolio = portfolio_index;
   emit portfoliosChanged();
+}
+
+double ControllerWrapper::getCurrentPortfolioValue() const {
+  return getPortfolioValue(m_current_portfolio);
 }
 
 void ControllerWrapper::addAsset(
@@ -68,3 +77,47 @@ QStringList ControllerWrapper::getAssetsList() const {
 
   return list;
 }
+
+void ControllerWrapper::addTransaction(
+    std::size_t portfolio_index,
+    std::size_t asset_index,
+    double quantity,
+    double price,
+    std::string_view type,
+    std::string_view currency,
+    [[maybe_unused]]int day,
+    [[maybe_unused]]int month,
+    [[maybe_unused]]int year) {
+
+
+   const std::chrono::year_month_day ymd{
+        std::chrono::year{year},
+        std::chrono::month{static_cast<unsigned>(month)},
+        std::chrono::day{static_cast<unsigned>(day)}
+  };
+  m_controller->addTransaction(
+      portfolio_index,
+      asset_index,
+      quantity,
+      price,
+      type,
+      currency,
+      ymd
+  );
+
+}
+
+QStringList ControllerWrapper::validateAndGetDate(QString date) const {
+  std::istringstream iss(date.toStdString());
+  std::chrono::year_month_day ymd {};
+  iss >> std::chrono::parse("%d-%m-%Y", ymd);
+  if (!iss.fail() && ymd.ok()) {
+    return {
+      QString::number(static_cast<unsigned>(ymd.day())),
+      QString::number(static_cast<unsigned>(ymd.month())),
+      QString::number(static_cast<int>(ymd.year()))
+    };
+  }
+  return {};
+}
+

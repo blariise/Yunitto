@@ -21,6 +21,7 @@ class Controller {
     const std::string& getPortfolioName(std::size_t portfolio_index) const;
     const std::vector<std::unique_ptr<Portfolio>>& getPortfolios() const;
     double getPortfoliosTotalValue() const;
+    double getPortfolioValue(std::size_t portfolio_index) const;
 
     void addAsset(
         std::size_t portfolio_index,
@@ -38,6 +39,7 @@ class Controller {
         std::size_t asset_index,
         double quantity,
         double price,
+        std::string_view type,
         std::string_view payment_currency,
         Date date);
     void removeTransaction(

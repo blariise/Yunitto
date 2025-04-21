@@ -283,6 +283,7 @@ void CliView::displayAddTransactionMenu(std::size_t portfolio_index, std::size_t
 
   double quantity;
   double price;
+  std::string type;
   std::string payment_currency;
   Date date;
 
@@ -291,6 +292,9 @@ void CliView::displayAddTransactionMenu(std::size_t portfolio_index, std::size_t
 
   std::cout << "Enter price: ";
   std::cin >> price;
+
+  std::cout << "Enter type (buy / sell): ";
+  std::cin >> type;
 
   std::cout << "Enter payment currency: ";
   std::cin >> payment_currency;
@@ -302,7 +306,7 @@ void CliView::displayAddTransactionMenu(std::size_t portfolio_index, std::size_t
   std::istringstream iss { temp_date };
   iss >> std::chrono::parse("%d-%m-%Y", date);
 
-  addTransaction(portfolio_index, asset_index, quantity, price, payment_currency, date);
+  addTransaction(portfolio_index, asset_index, quantity, price, type, payment_currency, date);
 }
 
 void CliView::displayRemoveTransactionMenu(std::size_t portfolio_index, std::size_t asset_index) {
@@ -331,9 +335,10 @@ void CliView::addTransaction(
     std::size_t asset_index,
     double quantity,
     double price,
+    std::string_view type,
     std::string_view payment_currency,
     Date date) {
-  m_controller.addTransaction(portfolio_index, asset_index, quantity, price, payment_currency, date);
+  m_controller.addTransaction(portfolio_index, asset_index, quantity, price, type, payment_currency, date);
 }
 
 void CliView::removeTransaction(

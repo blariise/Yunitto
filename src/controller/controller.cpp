@@ -20,6 +20,10 @@ double Controller::getPortfoliosTotalValue() const {
   return m_portfolio_manager->getTotalValue();
 }
 
+double Controller::getPortfolioValue(std::size_t portfolio_index) const {
+  return m_portfolio_manager->getPortfolioValue(portfolio_index);
+}
+
 void Controller::printPortfolios() const {
   m_portfolio_manager->print();
 }
@@ -71,11 +75,12 @@ void Controller::addTransaction(
     std::size_t asset_index,
     double quantity,
     double price,
+    std::string_view type,
     std::string_view payment_currency,
     Date date) {
   Portfolio& portfolio { m_portfolio_manager->getPortfolio(portfolio_index) };
   Asset& asset { portfolio.getAsset(asset_index) };
-  asset.addTransaction(std::make_unique<Transaction>(quantity, price, payment_currency, date));
+  asset.addTransaction(std::make_unique<Transaction>(quantity, price, type, payment_currency, date));
 }
 
 void Controller::removeTransaction(
