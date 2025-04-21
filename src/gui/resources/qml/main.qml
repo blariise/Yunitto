@@ -6,8 +6,8 @@ ApplicationWindow {
   color: "#130e2b"
   visible: true
   title: "Yunitto"
-  width: 800
-  height: 600
+  width: 1024
+  height: 768
 
   StackView {
     id: main_stack_view
