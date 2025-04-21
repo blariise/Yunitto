@@ -3,24 +3,26 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Rectangle {
-  property int root_width
-  property int root_height
   property int portfolio_index
-
   id: root
-  width: 800
-  height: 720
 
   ColumnLayout {
     anchors.fill: parent
     spacing: 0
 
+    Button {
+      text: "back"
+      onClicked: {
+        main_stack_view.pop()
+      }
+    }
+
     // upper
     Rectangle {
       Layout.fillWidth: true
-      Layout.preferredHeight: parent.height * 0.2
+      Layout.preferredHeight: parent.height * 0.25
       color: "#130e2b"
-      border.color: "black"
+      //border.color: "black"
 
       Column {
         anchors.centerIn: parent
@@ -36,7 +38,7 @@ Rectangle {
         Text {
           color: "white"
           font.pointSize: 20
-          text: " Total value: " + controller.total_value
+          text: " Total value: " + controller.portfolio_value
         }
 
         Button {
@@ -136,7 +138,7 @@ Rectangle {
       Layout.fillWidth: true
       Layout.fillHeight: true
       color: "#130e2b"
-      border.color: "black"
+      //border.color: "black"
 
       ListView {
         id: portfolioListView
@@ -183,7 +185,7 @@ Rectangle {
                   text: "Manage"
                   highlighted: true
                   onClicked: {
-                    main_stack_view.push("portfolio.qml", {"portfolio_index": index})
+                    main_stack_view.push("asset.qml", {"portfolio_index": portfolio_index, "asset_index": index})
                   }
                 }
                 Button {
