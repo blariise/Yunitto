@@ -65,3 +65,16 @@ Asset& PortfolioManager::getAsset(std::size_t portfolio_index, std::size_t asset
 const std::vector<std::unique_ptr<Asset>>& PortfolioManager::getAssets(std::size_t portfolio_index) const {
   return getPortfolio(portfolio_index).getAssets();
 }
+
+const std::vector<std::unique_ptr<Transaction>>& PortfolioManager::getTransactions(
+    std::size_t portfolio_index,
+    std::size_t asset_index) const {
+  return getAsset(portfolio_index, asset_index).getTransactions();
+}
+
+const Transaction& PortfolioManager::getTransaction(
+    std::size_t portfolio_index,
+    std::size_t asset_index,
+    std::size_t transaction_index) const {
+  return getAsset(portfolio_index, asset_index).getTransaction(transaction_index);
+}

@@ -27,8 +27,9 @@ class Asset {
     void addTransaction(std::unique_ptr<Transaction> transaction);
     void removeTransaction(std::size_t transaction_index);
     void printTransactions() const;
-
+    Transaction& getTransaction(std::size_t transaction_index) const;
     std::size_t getTransactionsNumber() const;
+    const std::vector<std::unique_ptr<Transaction>>& getTransactions() const;
 
   private:
     std::string m_name;

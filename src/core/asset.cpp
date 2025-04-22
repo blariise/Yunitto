@@ -54,3 +54,11 @@ void Asset::printTransactions() const {
 std::size_t Asset::getTransactionsNumber() const {
   return std::size(m_transactions);
 }
+
+Transaction& Asset::getTransaction(std::size_t transaction_index) const {
+  return *m_transactions.at(transaction_index);
+}
+
+const std::vector<std::unique_ptr<Transaction>>& Asset::getTransactions() const {
+  return m_transactions;
+}
