@@ -17,6 +17,10 @@ int main(int argc, char *argv[]) {
 
   auto portfolio_manager { std::make_unique<PortfolioManager>() };
   auto controller { std::make_unique<Controller>(std::move(portfolio_manager)) };
+  controller->addPortfolio("CRYPTO");
+  controller->addAsset(0, "BITCOIN", "BTC", "Crypto", "PLN");
+  controller->addAsset(0, "ETHEREUM", "ETH", "Crypto", "PLN");
+  controller->addTransaction(0, 0, 1, 10, "Buy", "PLN", ymd);
   ControllerWrapper controllerWrapper { std::move(controller) };
 
   QQmlApplicationEngine engine;
