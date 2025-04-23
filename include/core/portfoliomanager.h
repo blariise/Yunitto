@@ -10,7 +10,7 @@
 class PortfolioManager {
   public:
     PortfolioManager();
-
+    
     void addPortfolio(std::unique_ptr<Portfolio> portfolio);
     void removePortfolio(std::size_t portfolio_index);
     Portfolio& getPortfolio(std::size_t portfolio_index) const;

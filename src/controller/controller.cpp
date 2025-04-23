@@ -116,3 +116,10 @@ const std::vector<std::unique_ptr<Transaction>>& Controller::getTransactions(
   return m_portfolio_manager->getTransactions(portfolio_index, asset_index);
 }
 
+Asset& Controller::getAsset(std::size_t portfolio_index, std::size_t asset_index) const{
+  return m_portfolio_manager->getAsset(portfolio_index, asset_index);
+}
+
+double Controller::getAssetValue(std::size_t portfolio_index, std::size_t asset_index) const {
+  return getAsset(portfolio_index, asset_index).getCurrentValue();
+}

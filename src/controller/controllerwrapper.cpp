@@ -141,3 +141,7 @@ QStringList ControllerWrapper::getTransactionsList() const {
 QString ControllerWrapper::getAssetName() const {
   return QString::fromStdString(m_controller->getAssetName(m_current_portfolio, m_current_asset));
 }
+
+double ControllerWrapper::getCurrentAssetValue() const {
+  return m_controller->getAsset(m_current_portfolio, m_current_asset).getCurrentValue();
+}

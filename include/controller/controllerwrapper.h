@@ -6,6 +6,7 @@
 
 class ControllerWrapper : public QObject {
   Q_OBJECT
+
   Q_PROPERTY(QStringList portfolios READ getPortfoliosList NOTIFY portfoliosChanged)
   Q_PROPERTY(double total_value READ getPortfoliosTotalValue NOTIFY portfoliosChanged)
   Q_PROPERTY(int portfolios_number READ getPortfoliosNumber NOTIFY portfoliosChanged)
@@ -14,6 +15,7 @@ class ControllerWrapper : public QObject {
 
   Q_PROPERTY(QStringList assets READ getAssetsList NOTIFY assetsChanged)
   Q_PROPERTY(QString asset_name READ getAssetName NOTIFY assetsChanged)
+  Q_PROPERTY(double asset_value READ getCurrentAssetValue NOTIFY assetsChanged)
 
   Q_PROPERTY(QStringList transactions READ getTransactionsList NOTIFY transactionsChanged)
 
@@ -41,6 +43,7 @@ class ControllerWrapper : public QObject {
         const QString& currency);
     Q_INVOKABLE void removeAsset(std::size_t portfolio_index, std::size_t asset_index);
     Q_INVOKABLE void setCurrentAsset(std::size_t asset_index);
+    double getCurrentAssetValue() const;
 
     // if date is valid return QStringList [day, month, year]; elese return empty QStringList
     Q_INVOKABLE QStringList validateAndGetDate(QString date) const;
