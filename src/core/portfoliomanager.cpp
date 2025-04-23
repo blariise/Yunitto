@@ -59,7 +59,7 @@ std::size_t PortfolioManager::getTransactionsNumber(
 }
 
 Asset& PortfolioManager::getAsset(std::size_t portfolio_index, std::size_t asset_index) const {
-  return getPortfolio(portfolio_index).getAsset(asset_index);
+  return m_portfolios.at(portfolio_index)->getAsset(asset_index);
 }
 
 const std::string& PortfolioManager::getAssetName(std::size_t portfolio_index, std::size_t asset_index) const {

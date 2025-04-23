@@ -148,7 +148,7 @@ Rectangle {
           var date_string = transaction_date_field.text
           var quantity = transaction_quantity_field.text
           var price = transaction_price_field.text
-          var type = transaction_type_field.text
+          var type = transaction_type_field.currentText
           var currency = transaction_currency_field.text
 
           if (quantity !== "" && price !== "") {
@@ -209,6 +209,7 @@ Rectangle {
                 text: modelData
                 font.bold: true
                 font.pointSize: 10
+                color: modelData === "Buy" ? "green" : "red"
               }
 
               Text {
@@ -227,7 +228,8 @@ Rectangle {
                   text: "Manage"
                   highlighted: true
                   onClicked: {
-                    main_stack_view.push("transaction.qml", {"portfolio_index": index})
+                    console.log(root.asset_index)
+                    //main_stack_view.push("transaction.qml", {"portfolio_index": index})
                   }
                 }
                 Button {

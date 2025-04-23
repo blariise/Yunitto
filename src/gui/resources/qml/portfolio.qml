@@ -5,6 +5,7 @@ import QtQuick.Layouts
 Rectangle {
   property int portfolio_index
   id: root
+  color: "#130e2b"
 
   ColumnLayout {
     anchors.fill: parent
@@ -114,7 +115,7 @@ Rectangle {
             Layout.fillWidth: true
             focus: true
             model: ["PLN", "EUR", "USD"]
-          }       
+          }
 
         }
 
@@ -169,7 +170,7 @@ Rectangle {
               }
 
               Text {
-                text: "Value: "
+                text: "Value: " + controller.asset_value
                 font.pointSize: 10
                 color: "gray"
               }
@@ -185,6 +186,9 @@ Rectangle {
                   text: "Manage"
                   highlighted: true
                   onClicked: {
+                    controller.printE()
+                    console.log("#", index)
+                    controller.setCurrentAsset(index)
                     main_stack_view.push("asset.qml", {"portfolio_index": portfolio_index, "asset_index": index})
                   }
                 }
