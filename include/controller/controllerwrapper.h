@@ -13,11 +13,11 @@ class ControllerWrapper : public QObject {
   Q_PROPERTY(QString portfolio_name READ getPortfolioName NOTIFY portfoliosChanged)
   Q_PROPERTY(double portfolio_value READ getCurrentPortfolioValue NOTIFY portfoliosChanged)
 
-  Q_PROPERTY(QStringList assets READ getAssetsList NOTIFY assetsChanged)
-  Q_PROPERTY(QString asset_name READ getAssetName NOTIFY assetsChanged)
-  Q_PROPERTY(double asset_value READ getCurrentAssetValue NOTIFY assetsChanged)
+  Q_PROPERTY(QStringList assets READ getAssetsList NOTIFY portfoliosChanged)
+  Q_PROPERTY(QString asset_name READ getAssetName NOTIFY portfoliosChanged)
+  Q_PROPERTY(double asset_value READ getCurrentAssetValue NOTIFY portfoliosChanged)
 
-  Q_PROPERTY(QStringList transactions READ getTransactionsList NOTIFY transactionsChanged)
+  Q_PROPERTY(QStringList transactions READ getTransactionsList NOTIFY portfoliosChanged)
 
   public:
     explicit ControllerWrapper(std::unique_ptr<Controller> controller, QObject* parent = nullptr);
@@ -62,6 +62,10 @@ class ControllerWrapper : public QObject {
         QString month,
         QString year);
 
+    Q_INVOKABLE void removeTransaction(
+        std::size_t portfolio_index,
+        std::size_t asset_index,
+        std::size_t transaction_index);
     QStringList getTransactionsList() const;
 
   signals:

@@ -3,6 +3,7 @@
         <file>resources/qml/main.qml</file>
         <file>resources/qml/portfoliomanager.qml</file>
         <file>resources/qml/portfolio.qml</file>
+        <file>resources/qml/asset.qml</file>
     </qresource>
 </RCC>
 

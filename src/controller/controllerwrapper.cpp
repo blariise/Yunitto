@@ -63,13 +63,11 @@ void ControllerWrapper::addAsset(
       type.toStdString(),
       currency.toStdString());
   emit portfoliosChanged();
-  emit assetsChanged();
 }
 
 void ControllerWrapper::removeAsset(std::size_t portfolio_index, std::size_t asset_index) {
   m_controller->removeAsset(portfolio_index, asset_index);
   emit portfoliosChanged();
-  emit assetsChanged();
 }
 
 void ControllerWrapper::setCurrentAsset(std::size_t asset_index) {
@@ -111,8 +109,14 @@ void ControllerWrapper::addTransaction(
       ymd
   );
   emit portfoliosChanged();
-  emit assetsChanged();
-  emit transactionsChanged();
+}
+
+void ControllerWrapper::removeTransaction(
+    std::size_t portfolio_index,
+    std::size_t asset_index,
+    std::size_t transaction_index) {
+  m_controller->removeTransaction(portfolio_index, asset_index, transaction_index);
+  emit portfoliosChanged();
 }
 
 QStringList ControllerWrapper::validateAndGetDate(QString date) const {
