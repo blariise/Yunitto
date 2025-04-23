@@ -70,6 +70,12 @@ const std::vector<std::unique_ptr<Asset>>& Controller::getAssets(std::size_t por
   return m_portfolio_manager->getAssets(portfolio_index);
 }
 
+const std::string& Controller::getAssetName(
+    std::size_t portfolio_index,
+    std::size_t asset_index) const {
+  return m_portfolio_manager->getAssetName(portfolio_index, asset_index);
+}
+
 void Controller::addTransaction(
     std::size_t portfolio_index,
     std::size_t asset_index,
@@ -102,5 +108,11 @@ void Controller::printTransactions(
 
 const std::string& Controller::getPortfolioName(std::size_t portfolio_index) const {
   return m_portfolio_manager->getPortfolioName(portfolio_index);
+}
+
+const std::vector<std::unique_ptr<Transaction>>& Controller::getTransactions(
+    std::size_t portfolio_index,
+    std::size_t asset_index) const {
+  return m_portfolio_manager->getTransactions(portfolio_index, asset_index);
 }
 

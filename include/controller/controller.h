@@ -33,6 +33,7 @@ class Controller {
     void printAssets(std::size_t portfolio_index) const;
     std::size_t getAssetsNumber(std::size_t portfolio_index) const;
     const std::vector<std::unique_ptr<Asset>>& getAssets(std::size_t portfolio_index) const;
+    const std::string& getAssetName(std::size_t portfolio_index, std::size_t asset_index) const;
 
     void addTransaction(
         std::size_t portfolio_index,

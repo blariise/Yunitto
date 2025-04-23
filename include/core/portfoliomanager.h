@@ -30,6 +30,8 @@ class PortfolioManager {
     Asset& getAsset(std::size_t portfolio_index, std::size_t asset_index) const;
     const std::vector<std::unique_ptr<Asset>>& getAssets(
         std::size_t portfolio_index) const;
+    const std::string& getAssetName(std::size_t portoflio_index, std::size_t asset_index) const;
+
 
     const std::vector<std::unique_ptr<Transaction>>& getTransactions(
         std::size_t portfolio_index,

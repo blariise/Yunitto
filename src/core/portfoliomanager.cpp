@@ -62,6 +62,10 @@ Asset& PortfolioManager::getAsset(std::size_t portfolio_index, std::size_t asset
   return getPortfolio(portfolio_index).getAsset(asset_index);
 }
 
+const std::string& PortfolioManager::getAssetName(std::size_t portfolio_index, std::size_t asset_index) const {
+  return getAsset(portfolio_index, asset_index).getName();
+}
+
 const std::vector<std::unique_ptr<Asset>>& PortfolioManager::getAssets(std::size_t portfolio_index) const {
   return getPortfolio(portfolio_index).getAssets();
 }

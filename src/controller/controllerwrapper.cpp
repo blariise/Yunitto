@@ -1,4 +1,5 @@
 #include "controllerwrapper.h"
+#include <string>
 #include <QDebug>
 
 ControllerWrapper::ControllerWrapper(std::unique_ptr<Controller> controller, QObject* parent)
@@ -61,12 +62,18 @@ void ControllerWrapper::addAsset(
       ticker.toStdString(),
       type.toStdString(),
       currency.toStdString());
+  emit portfoliosChanged();
   emit assetsChanged();
 }
 
 void ControllerWrapper::removeAsset(std::size_t portfolio_index, std::size_t asset_index) {
   m_controller->removeAsset(portfolio_index, asset_index);
+  emit portfoliosChanged();
   emit assetsChanged();
+}
+
+void ControllerWrapper::setCurrentAsset(std::size_t asset_index) {
+  m_current_asset = asset_index;
 }
 
 QStringList ControllerWrapper::getAssetsList() const {
@@ -79,32 +86,33 @@ QStringList ControllerWrapper::getAssetsList() const {
 }
 
 void ControllerWrapper::addTransaction(
-    std::size_t portfolio_index,
-    std::size_t asset_index,
-    double quantity,
-    double price,
-    std::string_view type,
-    std::string_view currency,
-    [[maybe_unused]]int day,
-    [[maybe_unused]]int month,
-    [[maybe_unused]]int year) {
+    int portfolio_index,
+    int asset_index,
+    QString quantity,
+    QString price,
+    const QString& type,
+    const QString& currency,
+    QString day,
+    QString month,
+    QString year) {
 
-
-   const std::chrono::year_month_day ymd{
-        std::chrono::year{year},
-        std::chrono::month{static_cast<unsigned>(month)},
-        std::chrono::day{static_cast<unsigned>(day)}
+  const std::chrono::year_month_day ymd{
+      std::chrono::year{ year.toInt() },
+      std::chrono::month{ static_cast<unsigned>(month.toInt()) },
+      std::chrono::day{ static_cast<unsigned>(day.toInt()) }
   };
   m_controller->addTransaction(
       portfolio_index,
       asset_index,
-      quantity,
-      price,
-      type,
-      currency,
+      quantity.toDouble(),
+      price.toDouble(),
+      type.toStdString(),
+      currency.toStdString(),
       ymd
   );
-
+  emit portfoliosChanged();
+  emit assetsChanged();
+  emit transactionsChanged();
 }
 
 QStringList ControllerWrapper::validateAndGetDate(QString date) const {
@@ -121,3 +129,15 @@ QStringList ControllerWrapper::validateAndGetDate(QString date) const {
   return {};
 }
 
+QStringList ControllerWrapper::getTransactionsList() const {
+  QStringList list {};
+  const auto& transactions { m_controller->getTransactions(m_current_portfolio, m_current_asset) };
+  for (const auto& transaction : transactions)
+    list.append(QString::fromStdString(transaction->getType()));
+
+  return list;
+}
+
+QString ControllerWrapper::getAssetName() const {
+  return QString::fromStdString(m_controller->getAssetName(m_current_portfolio, m_current_asset));
+}

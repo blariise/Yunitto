@@ -13,6 +13,9 @@ class ControllerWrapper : public QObject {
   Q_PROPERTY(double portfolio_value READ getCurrentPortfolioValue NOTIFY portfoliosChanged)
 
   Q_PROPERTY(QStringList assets READ getAssetsList NOTIFY assetsChanged)
+  Q_PROPERTY(QString asset_name READ getAssetName NOTIFY assetsChanged)
+
+  Q_PROPERTY(QStringList transactions READ getTransactionsList NOTIFY transactionsChanged)
 
   public:
     explicit ControllerWrapper(std::unique_ptr<Controller> controller, QObject* parent = nullptr);
@@ -37,26 +40,31 @@ class ControllerWrapper : public QObject {
         const QString& type,
         const QString& currency);
     Q_INVOKABLE void removeAsset(std::size_t portfolio_index, std::size_t asset_index);
+    Q_INVOKABLE void setCurrentAsset(std::size_t asset_index);
 
     // if date is valid return QStringList [day, month, year]; elese return empty QStringList
     Q_INVOKABLE QStringList validateAndGetDate(QString date) const;
 
+    QString getAssetName() const;
     QStringList getAssetsList() const;
 
     Q_INVOKABLE void addTransaction(
-        std::size_t portfolio_index,
-        std::size_t asset_index,
-        double quantity,
-        double price,
-        std::string_view type,
-        std::string_view currency,
-        int day,
-        int month,
-        int year);
+        int portfolio_index,
+        int asset_index,
+        QString quantity,
+        QString price,
+        const QString& type,
+        const QString& currency,
+        QString day,
+        QString month,
+        QString year);
+
+    QStringList getTransactionsList() const;
 
   signals:
     void portfoliosChanged();
     void assetsChanged();
+    void transactionsChanged();
 
   private:
     std::size_t m_current_portfolio {};
